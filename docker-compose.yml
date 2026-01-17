@@ -23,5 +23,5 @@ services:
     restart: always
     ports:
       - "15672:15672"
-volumes:
-  postgres_data
+  volumes:
+    postgres_data:
