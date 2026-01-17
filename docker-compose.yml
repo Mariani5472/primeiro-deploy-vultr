@@ -14,14 +14,26 @@ services:
     image: postgres:15
     restart: always
     env_file:
-    - ./backend/.env
+      - ./backend/.env
     volumes:
-    - postgres_data:/var/lib/postgresql/data
+      - postgres_data:/var/lib/postgresql/data
 
   rabbitmq:
     image: rabbitmq:3-management
     restart: always
     ports:
       - "15672:15672"
+
+  nginx:
+    image: 'jc21/nginx-proxy-manager:latest'
+    restart: always
+    ports:
+      - '80:80'
+      - '81:81'
+      - '443:443'
+    volumes:
+      - ./nginx_data:/data
+      - ./letsencrypt:/etc/letsencrypt
+
 volumes:
-    postgres_data:
+  postgres_data:
