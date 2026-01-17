@@ -1,5 +1,9 @@
 services:
-  app:
+
+  frontend:
+    build: ./frontend
+    restart: always
+  backend:
     build: ./backend
     restart: always
     ports:
@@ -9,6 +13,11 @@ services:
     depends_on:
       - rabbitmq
       - postgres
+      - redis
+
+  redis:
+    image: redis:alpine
+    restart: always
 
   postgres:
     image: postgres:15
