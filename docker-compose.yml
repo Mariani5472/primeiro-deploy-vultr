@@ -1,0 +1,27 @@
+services:
+  app:
+    build: ./backend
+    restart: always
+    ports:
+      - "3000:3000"
+    env_file:
+      - ./backend/.env
+    depends_on:
+      - rabbitmq
+      - postgres
+
+    postgres:
+      image: postgres:15
+      restart: always
+      env_file:
+      - ./backend/.env
+      volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+    rabbitmq:
+      image: rabbitmq:3-management
+      restart: always
+      ports:
+        - "15672:15672"
+volumes:
+  postgres_data
