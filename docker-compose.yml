@@ -10,18 +10,18 @@ services:
       - rabbitmq
       - postgres
 
-    postgres:
-      image: postgres:15
-      restart: always
-      env_file:
-      - ./backend/.env
-      volumes:
-      - postgres_data:/var/lib/postgresql/data
+  postgres:
+    image: postgres:15
+    restart: always
+    env_file:
+    - ./backend/.env
+    volumes:
+    - postgres_data:/var/lib/postgresql/data
 
-    rabbitmq:
-      image: rabbitmq:3-management
-      restart: always
-      ports:
-        - "15672:15672"
+  rabbitmq:
+    image: rabbitmq:3-management
+    restart: always
+    ports:
+      - "15672:15672"
 volumes:
   postgres_data
