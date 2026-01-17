@@ -14,7 +14,9 @@ Conteúdo:
 - Container específico para a imagem do `nginx`. 
 - Container específico para a imagem do `rabbitmq`. 
 - Container específico para a imagem do `postgres`.
-- Container específico para a imagem do `node`.
+- Container específico para a imagem do `redis`.
+- Container específico para a imagem do `frontend` com typescript e react.
+- Container específico para a imagem do `backend` com express e websocket.
 ---
 Meta: 
 - **Emular o deploy de uma aplicação se familiarizar com o ambiente e acima de tudo, aplicar no ambiente de trabalho e entender o contexto geral desse processo.**
