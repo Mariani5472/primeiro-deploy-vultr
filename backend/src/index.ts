@@ -3,17 +3,28 @@ import { createServer } from 'http';
 import { Server } from 'socket.io';
 import amqp from 'amqplib';
 import { startWorker } from './worker';
+import dotenv from 'dotenv';
+dotenv.config();
 
 const app = express();
 const httpServer = createServer(app);
 const io = new Server(httpServer, { cors: { origin: "*" } });
 
-const RABBIT_URL = process.env.RABBIT_URL || 'rabbitmq';
+
+const RABBIT_HOST = process.env.RABBIT_HOST?.trim() || 'localhost';
+const RABBIT_PORT = Number(process.env.RABBIT_PORT?.trim()) || 5672;
+const RABBIT_USERNAME = process.env.RABBIT_USERNAME?.trim() || 'guest';
+const RABBIT_PASSWORD = process.env.RABBIT_PASSWORD?.trim() || 'guest';
 
 async function startServer() {
   startWorker();
 
-  const connection = await amqp.connect(RABBIT_URL);
+  const connection = await amqp.connect({
+      hostname: RABBIT_HOST,
+      port: RABBIT_PORT,
+      username: RABBIT_USERNAME,
+      password: RABBIT_PASSWORD
+  });
   const channel = await connection.createChannel();
   const queue = 'brazil_flights';
 
