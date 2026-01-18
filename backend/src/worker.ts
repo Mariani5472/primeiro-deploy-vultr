@@ -10,14 +10,9 @@ const RABBIT_PASSWORD = process.env.RABBIT_PASSWORD?.trim() || 'guest';
 
 const startWorker = async () => {
     try {
-        console.log('Variáveis RabbitMQ:', {
-            RABBIT_HOST,
-            RABBIT_PORT,
-            RABBIT_USERNAME,
-            RABBIT_PASSWORD
-        });
+
         const connection = await amqp.connect({
-            protocol: 'ampq', 
+            protocol: 'amqp', 
             vhost: '/', 
             hostname: RABBIT_HOST,
             port: RABBIT_PORT,
