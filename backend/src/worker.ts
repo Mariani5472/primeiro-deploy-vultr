@@ -12,8 +12,6 @@ const startWorker = async () => {
     try {
 
         const connection = await amqp.connect({
-            protocol: 'amqp', 
-            vhost: '/', 
             hostname: RABBIT_HOST,
             port: RABBIT_PORT,
             username: RABBIT_USERNAME,
