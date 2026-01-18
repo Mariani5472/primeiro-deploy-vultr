@@ -9,23 +9,30 @@ const RABBIT_USERNAME = process.env.RABBIT_USERNAME || 'guest';
 const RABBIT_PASSWORD = process.env.RABBIT_PASSWORD || 'guest';
 
 const startWorker = async () => {
-    const connection = await amqp.connect({
-        hostname: RABBIT_HOST,
-        port: RABBIT_PORT,
-        username: RABBIT_USERNAME,
-        password: RABBIT_PASSWORD
-    });
+    try {
+        const connection = await amqp.connect({
+            hostname: RABBIT_HOST,
+            port: RABBIT_PORT,
+            username: RABBIT_USERNAME,
+            password: RABBIT_PASSWORD,
+            protocol: 'amqp'
+        });
 
-    const channel = await connection.createChannel();
-    const queue = 'brazil_flights';
+        const channel = await connection.createChannel();
+        const queue = 'brazil_flights';
 
-    setInterval(async () => {
-        const planes = await fetchPlanes();
-        if (planes.lenght > 0) {
-            channel.sendToQueue(queue, Buffer.from(JSON.stringify(planes)));
-            console.log(`${planes.lenght} voos enviados a fila.`);
-        } 
-    }, 15000);
+        await channel.assertQueue(queue, { durable: false });
+
+        setInterval(async () => {
+            const planes = await fetchPlanes();
+            if (planes.lenght > 0) {
+                channel.sendToQueue(queue, Buffer.from(JSON.stringify(planes)));
+                console.log(`${planes.lenght} voos enviados a fila.`);
+            }
+        }, 15000);
+    } catch (error) {
+        console.error("Erro ao iniciar Worker:", error);
+    }
 };
 
 const fetchPlanes = async () => {
@@ -51,7 +58,7 @@ const fetchPlanes = async () => {
             timestamp: Date.now()
         }));
 
-    return planes;
+        return planes;
 
     } catch (error) {
         console.error('Erro ao buscar OpenSky:', error);
