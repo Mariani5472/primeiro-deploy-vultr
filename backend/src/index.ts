@@ -8,7 +8,14 @@ dotenv.config();
 
 const app = express();
 const httpServer = createServer(app);
-const io = new Server(httpServer, { cors: { origin: "*" } });
+const io = new Server(httpServer, {
+  cors: {
+    origin: "https://vinimariani.dev.br", 
+    methods: ["GET", "POST"],
+    credentials: true
+  },
+  transports: ['websocket', 'polling'] 
+});
 
 
 const RABBIT_HOST = process.env.RABBIT_HOST?.trim() || 'localhost';
