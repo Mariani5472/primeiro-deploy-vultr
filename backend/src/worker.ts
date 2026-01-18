@@ -3,7 +3,7 @@ import amqp from 'amqplib';
 import axios from 'axios';
 dotenv.config();
 
-const RABBIT_HOST = process.env.RABBIT_URL || 'rabbitmq';
+const RABBIT_HOST = process.env.RABBIT_HOST || 'rabbitmq';
 const RABBIT_PORT = Number(process.env.RABBIT_PORT) || 5672;
 const RABBIT_USERNAME = process.env.RABBIT_USERNAME || 'guest';
 const RABBIT_PASSWORD = process.env.RABBIT_PASSWORD || 'guest';
@@ -25,9 +25,9 @@ const startWorker = async () => {
 
         setInterval(async () => {
             const planes = await fetchPlanes();
-            if (planes.lenght > 0) {
+            if (planes.length > 0) {
                 channel.sendToQueue(queue, Buffer.from(JSON.stringify(planes)));
-                console.log(`${planes.lenght} voos enviados a fila.`);
+                console.log(`${planes.length} voos enviados a fila.`);
             }
         }, 15000);
     } catch (error) {
