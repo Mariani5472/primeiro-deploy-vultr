@@ -32,10 +32,9 @@ function App() {
     if (socketRef.current) return;
     
     const socket = io(SOCKET_URL, {
-      path: '/socket.io',
-      transports: ['websocket'],
-      secure: true
-    });
+      transports: ['polling', 'websocket'], 
+      withCredentials: true,
+    })
 
     console.log(socket)
 
