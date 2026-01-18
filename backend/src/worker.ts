@@ -16,8 +16,13 @@ const startWorker = async () => {
             RABBIT_USERNAME,
             RABBIT_PASSWORD
         });
-        const connectionUrl = `amqp://${RABBIT_USERNAME}:${RABBIT_PASSWORD}@${RABBIT_HOST}:${RABBIT_PORT}`;
-        const connection = await amqp.connect(connectionUrl);
+        const connection = await amqp.connect({
+            protocol: '/', 
+            hostname: RABBIT_HOST,
+            port: RABBIT_PORT,
+            username: RABBIT_USERNAME,
+            password: RABBIT_PASSWORD
+        });
 
         const channel = await connection.createChannel();
         const queue = 'brazil_flights';
