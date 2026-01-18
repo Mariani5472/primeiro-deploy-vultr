@@ -2,8 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
 import { io } from 'socket.io-client';
 import L from 'leaflet';
-import dotenv from 'dotenv';
-dotenv.config();
 import 'leaflet/dist/leaflet.css';
 
 // Configuração do ícone do avião
@@ -23,8 +21,7 @@ interface Plane {
   origin_country: string;
 }
 
-// CONECTE AO SEU SUBDOMÍNIO DE API
-const SOCKET_URL = process.env.SOCKET_URL || 'localhost:3000';
+const SOCKET_URL = 'https://api.vinimariani.dev.br';
 
 function App() {
   const [planes, setPlanes] = useState<Plane[]>([]);
