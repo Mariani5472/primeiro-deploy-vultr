@@ -3,13 +3,19 @@ import amqp from 'amqplib';
 import axios from 'axios';
 dotenv.config();
 
-const RABBIT_HOST = process.env.RABBIT_HOST || 'rabbitmq';
-const RABBIT_PORT = Number(process.env.RABBIT_PORT) || 5672;
-const RABBIT_USERNAME = process.env.RABBIT_USERNAME || 'guest';
-const RABBIT_PASSWORD = process.env.RABBIT_PASSWORD || 'guest';
+const RABBIT_HOST = process.env.RABBIT_HOST?.trim() || 'localhost';
+const RABBIT_PORT = Number(process.env.RABBIT_PORT?.trim()) || 5672;
+const RABBIT_USERNAME = process.env.RABBIT_USERNAME?.trim() || 'guest';
+const RABBIT_PASSWORD = process.env.RABBIT_PASSWORD?.trim() || 'guest';
 
 const startWorker = async () => {
     try {
+        console.log('Variáveis RabbitMQ:', {
+            RABBIT_HOST,
+            RABBIT_PORT,
+            RABBIT_USERNAME,
+            RABBIT_PASSWORD
+        });
         const connectionUrl = `amqp://${RABBIT_USERNAME}:${RABBIT_PASSWORD}@${RABBIT_HOST}:${RABBIT_PORT}`;
         const connection = await amqp.connect(connectionUrl);
 
