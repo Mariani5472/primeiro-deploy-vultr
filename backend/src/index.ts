@@ -9,12 +9,11 @@ dotenv.config();
 const app = express();
 const httpServer = createServer(app);
 const io = new Server(httpServer, {
+  path: '/socket.io',
   cors: {
-    origin: "https://vinimariani.dev.br", 
-    methods: ["GET", "POST"],
+    origin: 'https://vinimariani.dev.br',
     credentials: true
-  },
-  transports: ['websocket', 'polling'] 
+  }
 });
 
 

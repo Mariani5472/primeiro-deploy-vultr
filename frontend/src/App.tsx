@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
-import { io } from 'socket.io-client';
+import { io, Socket } from 'socket.io-client';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 
@@ -26,12 +26,20 @@ const SOCKET_URL = 'https://api.vinimariani.dev.br';
 function App() {
   const [planes, setPlanes] = useState<Plane[]>([]);
   const [connected, setConnected] = useState(false);
+  const socketRef = useRef<Socket | null>(null);
 
   useEffect(() => {
+    if (socketRef.current) return;
+    
     const socket = io(SOCKET_URL, {
-      transports: ['websocket'], 
+      path: '/socket.io',
+      transports: ['websocket'],
       secure: true
     });
+
+    console.log(socket)
+
+    socketRef.current = socket;
 
     socket.on('connect', () => setConnected(true));
     
@@ -39,7 +47,7 @@ function App() {
       setPlanes(data);
     });
 
-    return () => { socket.disconnect(); };
+    return () => { socket.disconnect(); socketRef.current = null; };
   }, []);
 
   return (
