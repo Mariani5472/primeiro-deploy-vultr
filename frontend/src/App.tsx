@@ -30,6 +30,7 @@ function App() {
   useEffect(() => {
     const socket = io(SOCKET_URL, {
       transports: ['websocket'], 
+      secure: true
     });
 
     socket.on('connect', () => setConnected(true));
