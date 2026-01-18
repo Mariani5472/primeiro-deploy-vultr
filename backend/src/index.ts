@@ -10,7 +10,10 @@ const app = express();
 const httpServer = createServer(app);
 const io = new Server(httpServer, {
   cors: {
-    origin: "https://vinimariani.dev.br",
+    origin: [
+      "https://vinimariani.dev.br", 
+      "https://www.vinimariani.dev.br"
+    ],
     methods: ["GET", "POST"],
     credentials: true
   },
