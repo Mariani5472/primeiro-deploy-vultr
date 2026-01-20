@@ -4,7 +4,6 @@ import { io, Socket } from 'socket.io-client';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 
-// Configuração do ícone do avião
 const planeIcon = (heading: number) => new L.DivIcon({
   html: `<div style="transform: rotate(${heading}deg); font-size: 24px;">✈️</div>`,
   className: 'custom-plane-icon',
