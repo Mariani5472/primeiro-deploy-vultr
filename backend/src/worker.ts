@@ -29,7 +29,7 @@ const startWorker = async () => {
                 channel.sendToQueue(queue, Buffer.from(JSON.stringify(planes)));
                 console.log(`${planes.length} voos enviados a fila.`);
             }
-        }, 15000);
+        }, 60000);
     } catch (error) {
         console.error("Erro ao iniciar Worker:", error);
     }

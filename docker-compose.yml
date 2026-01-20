@@ -12,20 +12,20 @@ services:
       - ./backend/.env
     depends_on:
       - rabbitmq
-      - postgres
-      - redis
+      # - postgres
+      # - redis
 
-  redis:
-    image: redis:alpine
-    restart: always
+  # redis:
+  #   image: redis:alpine
+  #   restart: always
 
-  postgres:
-    image: postgres:15
-    restart: always
-    env_file:
-      - ./backend/.env
-    volumes:
-      - postgres_data:/var/lib/postgresql/data
+  # postgres:
+  #   image: postgres:15
+  #   restart: always
+  #   env_file:
+  #     - ./backend/.env
+  #   volumes:
+  #     - postgres_data:/var/lib/postgresql/data
 
   rabbitmq:
     image: rabbitmq:3-management
@@ -44,5 +44,5 @@ services:
       - ./nginx_data:/data
       - ./letsencrypt:/etc/letsencrypt
 
-volumes:
-  postgres_data:
+# volumes:
+#   postgres_data:
